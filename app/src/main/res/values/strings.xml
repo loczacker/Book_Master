@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Book Master</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="book_master">Book Master</string>
+    <string name="profile">Profile</string>
+    <string name="discovery">Discovery</string>
+    <string name="book_case">Book Case</string>
+</resources>

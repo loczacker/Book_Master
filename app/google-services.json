@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1056822241936",
+    "project_id": "book-mern-stack",
+    "storage_bucket": "book-mern-stack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056822241936:android:05e983be3d2878180a4615",
+        "android_client_info": {
+          "package_name": "com.zacker.bookmaster"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056822241936-kgjc857q1142d1h5c60lh7gpolgg7a5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zacker.bookmaster",
+            "certificate_hash": "d54b4fb95d8f0d4f8c21393c79574e705a99c265"
+          }
+        },
+        {
+          "client_id": "1056822241936-n5su5rotqsq549o42oh6kbi6sd37h2sj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvV7LLP9-hZcfzTN_Nj28S-ByNPLLFsQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056822241936-n5su5rotqsq549o42oh6kbi6sd37h2sj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
