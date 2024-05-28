@@ -1,5 +1,10 @@
 package com.zacker.bookmaster.model
 
-class UsersModel {
-
-}
+data class UsersModel(
+    var id: String,
+    var about: String,
+    var email: String,
+    var name: String,
+    var photoURL: String,
+    var role: String
+)

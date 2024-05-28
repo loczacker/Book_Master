@@ -1,4 +1,12 @@
 package com.zacker.bookmaster.model
 
-class BooksModel {
-}
+data class BooksModel(
+    var id: String,
+    var authorName: String,
+    var bookDescription: String,
+    var bookPDFURL: String,
+    var bookTitle: String,
+    var category: String,
+    var imageURL: String,
+    var price: String
+)

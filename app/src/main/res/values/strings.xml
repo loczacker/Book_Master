@@ -6,4 +6,5 @@
     <string name="profile">Profile</string>
     <string name="discovery">Discovery</string>
     <string name="book_case">Book Case</string>
+    <string name="welcome_book_master">Welcome Book Master</string>
 </resources>
