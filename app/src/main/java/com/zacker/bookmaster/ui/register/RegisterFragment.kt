@@ -154,10 +154,10 @@ class RegisterFragment : Fragment() {
                 .addOnSuccessListener {
                     dialogBinding.etEmail.clearFocus()
                     dialogBinding.etEmail.text.clear()
-                    Toast.makeText(requireContext(), "Kiểm tra email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Try Email", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Thử lại", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Again", Toast.LENGTH_SHORT).show()
                 }
         }
         dialog.show()
@@ -172,12 +172,12 @@ class RegisterFragment : Fragment() {
         }
         viewModel.showToast.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let {
-                Toast.makeText(requireContext(), "Đăng kí thành công", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Register successfully", Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.showToast1.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let {
-                Toast.makeText(requireContext(), "Gmail không hợp lệ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
             }
         }
     }

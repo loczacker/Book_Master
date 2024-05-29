@@ -3,7 +3,9 @@ package com.zacker.bookmaster.network
 import com.zacker.bookmaster.model.BooksModel
 import com.zacker.bookmaster.model.UsersModel
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
@@ -14,12 +16,13 @@ interface ApiService {
     @GET("/all-books")
     suspend fun getAllBookWithCoroutine(): List<BooksModel>
 
-    @GET("/users/{id}")
-    fun getUserById(@Path("id") id: String): Call<UsersModel>
-
-    @GET("/users/{email}")
+    @GET("/user/{email}")
     fun getUserByEmail(@Path("email") email: String): Call<UsersModel>
 
+    @POST("/new-user")
+    suspend fun postNewUser(
+        @Body usersModel: UsersModel
+    ): UsersModel
 
 //    @GET("/users")
 //    fun getAllUser(): Call<List<UsersModel>>
@@ -28,6 +31,5 @@ interface ApiService {
 //        @Path("id") userId: String,
 //        @Body user: UsersModel
 //    ): Call<UsersModel>
-
 
 }

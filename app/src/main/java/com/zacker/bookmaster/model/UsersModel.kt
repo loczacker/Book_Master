@@ -1,7 +1,7 @@
 package com.zacker.bookmaster.model
 
 data class UsersModel(
-    var id: String,
+    var _id: String,
     var about: String,
     var email: String,
     var name: String,

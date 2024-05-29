@@ -1,6 +1,7 @@
 package com.zacker.bookmaster.ui.home.homeProfile
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +14,14 @@ import com.zacker.bookmaster.R
 import com.zacker.bookmaster.databinding.DialogChangeLanguageBinding
 import com.zacker.bookmaster.databinding.DialogChoiceLogOutBinding
 import com.zacker.bookmaster.databinding.FragmentHomeProfileBinding
+import com.zacker.bookmaster.util.Const
 
 class HomeProfileFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeProfileBinding
+    private var _binding: FragmentHomeProfileBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: HomeProfileViewModel
+
     private val imageIds = intArrayOf(
         R.drawable.profile_wall,
         R.drawable.profile_wall_1,
@@ -31,8 +35,10 @@ class HomeProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeProfileBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity())[HomeProfileViewModel::class.java]
+        _binding = FragmentHomeProfileBinding.inflate(inflater, container, false)
+        val sharedPreferences = requireActivity().getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
+        val factory = HomeProfileViewModelFactory(sharedPreferences)
+        viewModel = ViewModelProvider(this, factory)[HomeProfileViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         val imgCoverProfile = getRandomCoverImage()
         binding.imgProfile.setImageResource(imgCoverProfile)
@@ -43,6 +49,11 @@ class HomeProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpObserver()
         setListener()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setUpObserver() {
@@ -59,7 +70,7 @@ class HomeProfileFragment : Fragment() {
     }
 
     private fun getRandomCoverImage(): Int {
-        val randomIndex = (imageIds.indices).random()
+        val randomIndex = imageIds.indices.random()
         return imageIds[randomIndex]
     }
 
@@ -82,17 +93,13 @@ class HomeProfileFragment : Fragment() {
     private fun alertDialog() {
         val dialogBinding: DialogChoiceLogOutBinding =
             DialogChoiceLogOutBinding.inflate(layoutInflater)
-        val dialog = Dialog(requireActivity())
-        dialog.setContentView(dialogBinding.root)
-        val layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.apply {
-            window?.setLayout(layoutParams.width, layoutParams.height)
+        val dialog = Dialog(requireActivity()).apply {
+            setContentView(dialogBinding.root)
+            window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             window?.setBackgroundDrawableResource(android.R.color.transparent)
             setCancelable(false)
         }
+
         dialogBinding.btnOk.setOnClickListener {
             dialog.cancel()
             signOut()
@@ -109,28 +116,22 @@ class HomeProfileFragment : Fragment() {
             .navigate(R.id.home_to_login, null)
     }
 
-
     private fun changeLanguage() {
         val dialogBinding: DialogChangeLanguageBinding =
             DialogChangeLanguageBinding.inflate(layoutInflater)
-        val dialog = Dialog(requireActivity())
-        dialog.setContentView(dialogBinding.root)
-        val layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.apply {
-            window?.setLayout(layoutParams.width, layoutParams.height)
+        val dialog = Dialog(requireActivity()).apply {
+            setContentView(dialogBinding.root)
+            window?.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             window?.setBackgroundDrawableResource(android.R.color.transparent)
             setCancelable(false)
         }
+
         dialogBinding.btnOk.setOnClickListener {
+            // Implement logic to change language
         }
         dialogBinding.btnRefuse.setOnClickListener {
             dialog.dismiss()
         }
         dialog.show()
     }
-
-
 }

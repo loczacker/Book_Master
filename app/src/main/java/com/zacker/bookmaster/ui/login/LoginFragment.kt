@@ -1,6 +1,7 @@
 package com.zacker.bookmaster.ui.login
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,11 +16,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.zacker.bookmaster.R
 import com.zacker.bookmaster.databinding.DialogForgotPasswordBinding
 import com.zacker.bookmaster.databinding.FragmentLoginBinding
+import com.zacker.bookmaster.util.Const
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +37,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        changeColorButton()
         listener()
         setUpObserver()
-        changeColorButton()
     }
 
     private fun listener() {
@@ -60,6 +63,8 @@ class LoginFragment : Fragment() {
     private fun setUpObserver() {
         viewModel.resultData.observe(viewLifecycleOwner) {
             if (it == true) {
+                val sharedPref = activity?.getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
+                sharedPref?.edit()?.putString(Const.KEY_EMAIL_USER, binding.edEmail.text.toString())?.apply()
                 NavHostFragment.findNavController(this).navigate(R.id.login_to_home, null)
             }
         }
@@ -79,9 +84,7 @@ class LoginFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                if (binding.edEmail.text!!.length
-                    and binding.edPassword.text!!.length >0
-                ) {
+                if (binding.edEmail.text.isNotEmpty() && binding.edPassword.text.isNotEmpty()) {
                     binding.btnLogin.setBackgroundResource(R.drawable.buttonblue)
                     binding.btnLogin.isEnabled = true
                 } else {
@@ -94,7 +97,7 @@ class LoginFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                if (binding.edEmail.text!!.length and binding.edPassword.text!!.length > 0) {
+                if (binding.edEmail.text.isNotEmpty() && binding.edPassword.text.isNotEmpty()) {
                     binding.btnLogin.setBackgroundResource(R.drawable.buttonblue)
                     binding.btnLogin.isEnabled = true
                 } else {
@@ -104,6 +107,7 @@ class LoginFragment : Fragment() {
             }
         })
     }
+
     private fun forgotPassword() {
         val dialogBinding: DialogForgotPasswordBinding =
             DialogForgotPasswordBinding.inflate(layoutInflater)
