@@ -48,7 +48,6 @@ class RegisterFragment : Fragment() {
             } else {
                 binding.btRes.visibility = View.VISIBLE
             }
-
         }
         binding.tvLoginRegister.setOnClickListener {
 //            NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment, null)
@@ -177,7 +176,7 @@ class RegisterFragment : Fragment() {
         }
         viewModel.showToast1.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let {
-                Toast.makeText(requireContext(), "Invalid email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Check your email or password for invalidity.", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -21,9 +21,46 @@ class HomeProfileViewModel(
     val user: LiveData<UsersModel>
         get() = _user
 
+    private val _resultUser = MutableLiveData<UsersModel?>()
+    val resultUser: LiveData<UsersModel?> = _resultUser
+
     init {
         getUserByEmail(email)
     }
+
+    fun loadUserInfo(email: String) {
+        BookClient().getUserByEmail(email).enqueue(object : Callback<UsersModel> {
+            override fun onResponse(call: Call<UsersModel>, response: Response<UsersModel>) {
+                if (response.isSuccessful) {
+                    _resultUser.value = response.body()
+                } else {
+                    _resultUser.value = null
+                }
+            }
+
+            override fun onFailure(call: Call<UsersModel>, t: Throwable) {
+                _resultUser.value = null
+            }
+        })
+    }
+
+    fun updateUser(id: String, updatedUser: UsersModel) {
+        BookClient().updateUser(id, updatedUser).enqueue(object : Callback<UsersModel> {
+            override fun onResponse(call: Call<UsersModel>, response: Response<UsersModel>) {
+                if (response.isSuccessful) {
+                    val currentUser = _user.value
+                    val updatedUserWithEmail = updatedUser.copy(email = currentUser?.email ?: "")
+                    _user.value = updatedUserWithEmail
+                    _resultUser.value = updatedUserWithEmail
+                }
+            }
+
+            override fun onFailure(call: Call<UsersModel>, t: Throwable) {
+            }
+        })
+    }
+
+
 
     private fun getUserByEmail(email: String) {
         val call = BookClient.invoke().getUserByEmail(email)

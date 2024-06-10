@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:src="@drawable/book1"
+                android:src="@drawable/booklogin"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
 
@@ -37,14 +37,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/welcome_book_master"
                 android:fontFamily="@font/lato_regular"
-                android:textSize="26sp"
+                android:textSize="24sp"
                 android:textColor="#000000" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="LOGIN"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:fontFamily="@font/lato_bold"
                 android:textColor="#4356B4"
                 android:layout_marginTop="10dp" />
@@ -72,7 +72,7 @@
                 android:hint="yourname@gmail.com"
                 android:textColorHint="#999999"
                 android:inputType="textEmailAddress"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:fontFamily="@font/lato_regular"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp" />
@@ -100,7 +100,7 @@
                 android:hint="........."
                 android:inputType="textPassword"
                 android:textColorHint="#999999"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:fontFamily="@font/lato_regular"
                 android:textColor="@color/black" />
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -128,6 +128,25 @@
             android:textSize="19sp"
             android:fontFamily="@font/lato_regular" />
 
+        <android.widget.Button
+            android:id="@+id/btn_login_google"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_white"
+            android:text="Login With"
+            android:textColor="@color/white"
+            android:textColorHint="@color/black"
+            android:textSize="19sp"
+            android:fontFamily="@font/lato_regular"
+            android:drawableRight="@drawable/google_logo"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingStart="70dp"
+            android:paddingEnd="90dp" />
+
+
+
+
         <TextView
             android:id="@+id/tv_register_login"
             android:layout_width="wrap_content"
@@ -136,7 +155,7 @@
             android:text="No account? Register now."
             android:textSize="17sp"
             android:fontFamily="@font/lato_regular"
-            android:layout_marginTop="150dp" />
+            android:layout_marginTop="50dp" />
 
     </LinearLayout>
 </layout>

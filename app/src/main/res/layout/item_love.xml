@@ -9,26 +9,26 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="160dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
             app:cardCornerRadius="10dp">
             <ImageView
                 android:id="@+id/img_book"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/an_cu_ba_nam" />
+                android:src="@drawable/book22" />
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:orientation="vertical">
 
             <TextView
@@ -41,7 +41,7 @@
                 android:maxLines="2"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:text="Chưởng Môn Sư Thúc Không Thể Nào Là Phàm Nhân" />
+                android:text="@string/the_maid" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Tác giả: " />
+                    android:text="@string/author" />
 
                 <TextView
                     android:id="@+id/tv_name_writer"
@@ -65,11 +65,11 @@
                     android:fontFamily="@font/lato_bold"
                     android:maxLines="1"
                     android:textSize="15sp"
-                    android:text="Tao Tien Loc" />
+                    android:text="@string/nita_prose" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_cancel"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="70dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/delete" />
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Thể loại: " />
+                    android:text="@string/category" />
 
                 <TextView
                     android:id="@+id/tv_category"
@@ -99,7 +99,7 @@
                     android:maxLines="1"
                     android:fontFamily="@font/lato_bold"
                     android:textSize="15sp"
-                    android:text="Tiên hiệp" />
+                    android:text="@string/fiction" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

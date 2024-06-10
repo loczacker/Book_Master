@@ -31,7 +31,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Discover"
                 android:textColor="#283593"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,10 +50,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5.4"
+            android:layout_weight="5.5"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingHorizontal="7dp">
+            android:paddingHorizontal="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:text="Update"
                     android:textColor="#999999"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
@@ -95,11 +95,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_weight="7.4"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingHorizontal="7dp">
+            android:paddingHorizontal="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                     android:fontFamily="@font/lato_bold"
                     android:text="Random"
                     android:textColor="#999999"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />

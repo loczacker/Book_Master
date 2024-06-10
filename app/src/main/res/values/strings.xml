@@ -7,4 +7,11 @@
     <string name="discovery">Discovery</string>
     <string name="book_case">Book Case</string>
     <string name="welcome_book_master">Welcome Book Master</string>
+    <string name="fiction">Fiction</string>
+    <string name="category">Category:</string>
+    <string name="nita_prose">Nita Prose</string>
+    <string name="author">Author:</string>
+    <string name="the_maid">The Maid</string>
+    <string name="introduction">Introduction</string>
+    <string name="molly_introduction">Molly Gray is not like everyone else. She struggles with social skills and misreads the intentions of others</string>
 </resources>

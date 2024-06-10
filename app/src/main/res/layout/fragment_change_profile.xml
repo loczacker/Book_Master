@@ -1,162 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bg"
-    android:orientation="vertical"
-    android:weightSum="10"
-    tools:context=".ui.changeProfile.ChangeProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="viewModel"
+            type="com.zacker.bookmaster.ui.changeProfile.ChangeProfileViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="10dp">
-
-        <ImageButton
-            android:id="@+id/img_back_home_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_back"
-            android:importantForAccessibility="no" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:fontFamily="@font/lato_bold"
-            android:text="Edit information"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tv_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:fontFamily="@font/lato_medium"
-            android:text="Save"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
-        android:background="@drawable/custom_recycle_view"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:weightSum="7">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            tools:ignore="NestedWeights">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_ava"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/profile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/img_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="130dp"
-                android:layout_marginTop="148dp"
-                android:background="@drawable/changeimg"
-                app:layout_constraintStart_toStartOf="@+id/img_ava"
-                app:layout_constraintTop_toTopOf="@+id/img_ava" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg"
+            android:orientation="vertical"
+            android:weightSum="10"
+            tools:context=".ui.changeProfile.ChangeProfileFragment">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_medium"
-                android:text="Name"
-                android:textColor="#363E36"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/edt_change_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_baseline_supervisor_account_24"
-                android:fontFamily="@font/lato_medium"
-                android:hint="Name" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp">
+
+                <ImageButton
+                    android:id="@+id/img_back_home_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_back"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="70dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Edit information"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:fontFamily="@font/lato_medium"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="@drawable/custom_recycle_view"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:weightSum="7">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    tools:ignore="NestedWeights">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_ava"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        tools:src="@drawable/profile"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/img_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="130dp"
+                        android:layout_marginTop="148dp"
+                        android:background="@drawable/changeimg"
+                        app:layout_constraintStart_toStartOf="@+id/img_ava"
+                        app:layout_constraintTop_toTopOf="@+id/img_ava" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="Name"
+                        android:textColor="#363E36"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/edt_change_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_supervisor_account_24"
+                        android:fontFamily="@font/lato_medium"
+                        android:hint="Name" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="Phone"
+                        android:textColor="#363E36"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/ed_phone_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints=""
+                        android:drawableEnd="@drawable/ic_telephone"
+                        android:fontFamily="@font/lato_medium"
+                        android:hint="Phone"
+                        android:inputType="number"
+                        tools:ignore="TextFields" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="Address"
+                        android:textColor="#363E36"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/ed_address_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:hint="Address"
+                        app:drawableEndCompat="@drawable/ic_birthday" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:text="About"
+                        android:textColor="#363E36"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/ed_about_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_medium"
+                        android:hint="About"
+                        app:drawableEndCompat="@drawable/about_24" />
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_medium"
-                android:text="Phone"
-                android:textColor="#363E36"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/ed_phone_change"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints=""
-                android:drawableEnd="@drawable/ic_telephone"
-                android:fontFamily="@font/lato_medium"
-                android:hint="Phone"
-                android:inputType="number"
-                tools:ignore="TextFields" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_medium"
-                android:text="Address"
-                android:textColor="#363E36"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/ed_birthday_change"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_medium"
-                android:hint="Address"
-                app:drawableEndCompat="@drawable/ic_birthday" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+    </ScrollView>
+</layout>

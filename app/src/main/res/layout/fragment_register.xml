@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="REGISTER"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:fontFamily="@font/lato_bold"
             android:textColor="#4356B4"
             android:layout_marginTop="20dp" />
@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FIRST AND LAST NAME"
+            android:text="Nick Name"
             android:textSize="15sp"
             android:fontFamily="@font/lato_regular"
             android:layout_marginTop="10dp" />
@@ -135,6 +135,22 @@
             android:textSize="18sp"
             android:layout_marginTop="40dp" />
 
+        <android.widget.Button
+            android:id="@+id/btn_login_google"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_white"
+            android:text="Login Google"
+            android:textColor="@color/white"
+            android:textColorHint="@color/black"
+            android:textSize="19sp"
+            android:fontFamily="@font/lato_regular"
+            android:drawableRight="@drawable/google_logo"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingStart="70dp"
+            android:paddingEnd="70dp" />
+
         <TextView
             android:id="@+id/tv_login_register"
             android:layout_width="wrap_content"
@@ -143,7 +159,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/lato_regular"
             android:textSize="17sp"
-            android:layout_marginTop="130dp" />
+            android:layout_marginTop="50dp" />
 
     </LinearLayout>
 </layout>

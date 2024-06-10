@@ -1,15 +1,26 @@
 package com.zacker.bookmaster.ui.register
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.zacker.bookmaster.model.UsersModel
+import com.zacker.bookmaster.network.BookClient
+import com.zacker.bookmaster.util.Const
 import com.zacker.bookmaster.util.Event
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel(application: Application) : AndroidViewModel(application) {
+
     val resultData = MutableLiveData(false)
+    private val prefs: SharedPreferences = application.getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
 
     private val _showToast = MutableLiveData<Event<Boolean>>()
     val showToast: LiveData<Event<Boolean>>
@@ -19,43 +30,61 @@ class RegisterViewModel: ViewModel() {
     val showToast1: LiveData<Event<Boolean>>
         get() = _showToast1
 
+    private val apiService = BookClient.invoke()
+
     fun register(email: String, pass: String, userName: String) {
         val auth = Firebase.auth
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Đăng ký thành công
+                    postNewUserToApi(email, userName)
                 } else {
-                    // Xử lý lỗi khi đăng ký không thành công
                     showToastUnsuccessful()
                 }
             }
             .addOnFailureListener { e ->
-                // Xử lý lỗi xảy ra trong quá trình đăng ký
                 showToastUnsuccessful()
             }
-
     }
 
-
-    private fun login(email: String, pass: String) {
-        val auth: FirebaseAuth = Firebase.auth
-        auth.signInWithEmailAndPassword(email, pass)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+    private fun postNewUserToApi(email: String, userName: String) {
+        val auth = Firebase.auth
+        val newUser =
+            UsersModel(_id = auth.currentUser!!.uid , email = email, name = userName, role = "user",
+                photoURL = "", phone = "",
+                address = "", about = "")
+        apiService.postNewUser(newUser).enqueue(object : Callback<UsersModel> {
+            override fun onResponse(call: Call<UsersModel>, response: Response<UsersModel>) {
+                if (response.isSuccessful) {
+                    saveUserEmail(email)
+                    showToastSuccessful()
                     resultData.postValue(true)
                 } else {
-                    resultData.postValue(false)
+                    // Xử lý lỗi khi POST không thành công
+                    showToastUnsuccessful()
                 }
             }
 
+            override fun onFailure(call: Call<UsersModel>, t: Throwable) {
+                // Xử lý lỗi xảy ra trong quá trình POST
+                showToastUnsuccessful()
+            }
+        })
+    }
+
+    private fun saveUserEmail(email: String) {
+        val editor = prefs.edit()
+        editor.putBoolean(Const.KEY_LOGIN, true)
+        editor.putString(Const.KEY_EMAIL_USER, email)
+        editor.apply()
+        Log.d("RegisterViewModel", "Saved email: $email")
     }
 
     private fun showToastSuccessful() {
         _showToast.postValue(Event(true))
     }
+
     private fun showToastUnsuccessful() {
         _showToast1.postValue(Event(true))
     }
-
 }

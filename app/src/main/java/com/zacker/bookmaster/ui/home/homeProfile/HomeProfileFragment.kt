@@ -38,7 +38,7 @@ class HomeProfileFragment : Fragment() {
         _binding = FragmentHomeProfileBinding.inflate(inflater, container, false)
         val sharedPreferences = requireActivity().getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
         val factory = HomeProfileViewModelFactory(sharedPreferences)
-        viewModel = ViewModelProvider(this, factory)[HomeProfileViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(), factory)[HomeProfileViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         val imgCoverProfile = getRandomCoverImage()
         binding.imgProfile.setImageResource(imgCoverProfile)

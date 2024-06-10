@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.zacker.bookmaster.adapter.BookAdapter
+import androidx.navigation.fragment.NavHostFragment
+import com.zacker.bookmaster.R
 import com.zacker.bookmaster.databinding.FragmentHomeDiscoverBinding
 import com.zacker.bookmaster.model.BooksModel
 import com.zacker.bookmaster.network.BookClient
@@ -20,7 +21,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeDiscoverFragment : Fragment() {
+class HomeDiscoverFragment : Fragment(), RandomBookAdapter.OnBookItemClickListener,
+BookAdapter.OnBookItemClickListener{
     private lateinit var binding: FragmentHomeDiscoverBinding
     private lateinit var viewModel: HomeDiscoverViewModel
     private val books = arrayListOf<BooksModel>()
@@ -38,12 +40,13 @@ class HomeDiscoverFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListeners()
         updateBook()
         randomBook()
     }
 
     private fun randomBook() {
-        val adapter = RandomBookAdapter(randomBooks)
+        val adapter = RandomBookAdapter(randomBooks, this)
         binding.rvRandomBook.adapter = adapter
 
         lifecycleScope.launch(Dispatchers.IO) {
@@ -57,7 +60,7 @@ class HomeDiscoverFragment : Fragment() {
     }
 
     private fun updateBook() {
-        val adapter = BookAdapter(books)
+        val adapter = BookAdapter(books, this)
         binding.rvNewBook.adapter = adapter
 
         val bookRequest = BookClient.invoke().getAllBook()
@@ -83,5 +86,31 @@ class HomeDiscoverFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun setListeners() {
+        binding.ibNewBook.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.home_to_all_book, null)
+        }
+        binding.ibRandomBook.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.home_to_all_book, null)
+        }
+        binding.ibSearch.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_searchBookFragment, null)
+        }
+    }
+
+    override fun onClickBook(position: Int) {
+        val selectedBook = randomBooks[position]
+        val bundle = Bundle()
+        bundle.putSerializable("selectedBook", selectedBook)
+        NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_bookIntroductionFragment, bundle)
+    }
+
+    override fun onClick(position: Int) {
+        val selectedBook = books[position]
+        val bundle = Bundle()
+        bundle.putSerializable("selectedBook", selectedBook)
+        NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_bookIntroductionFragment, bundle)
     }
 }

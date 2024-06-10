@@ -17,5 +17,5 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:textSize="25sp"
-        tools:text="Chuong 1" />
+        tools:text="Chapter 1" />
 </FrameLayout>

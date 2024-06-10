@@ -1,4 +1,4 @@
-package com.zacker.bookmaster.adapter
+package com.zacker.bookmaster.ui.home.homeDiscover
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,8 @@ import com.zacker.bookmaster.databinding.ItemBookDiscoverBinding
 import com.zacker.bookmaster.model.BooksModel
 
 class BookAdapter(
-    private val books: List<BooksModel>
+    private val books: List<BooksModel>,
+    private val callback: OnBookItemClickListener
 ): RecyclerView.Adapter<BookAdapter.ViewHolder>()  {
     class ViewHolder (
         private val binding: ItemBookDiscoverBinding
@@ -32,6 +33,15 @@ class BookAdapter(
     override fun getItemCount() = books.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(books[position])
+        books[position].let {
+            holder.bind(it)
+        }
+        holder.itemView.setOnClickListener {
+            callback.onClick(position)
+        }
+    }
+
+    interface OnBookItemClickListener{
+        fun onClick(position: Int)
     }
 }

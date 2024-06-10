@@ -40,6 +40,15 @@
         <action
             android:id="@+id/home_to_login"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchBookFragment"
+            app:destination="@id/searchBookFragment" />
+        <action
+            android:id="@+id/home_to_all_book"
+            app:destination="@id/allBookFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookIntroductionFragment"
+            app:destination="@id/bookIntroductionFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -90,4 +99,27 @@
         android:name="com.zacker.bookmaster.ui.home.homeBookCase.booksCart.CartBookFragment"
         android:label="fragment_cart_book"
         tools:layout="@layout/fragment_cart_book" />
+    <fragment
+        android:id="@+id/searchBookFragment"
+        android:name="com.zacker.bookmaster.ui.searchBook.SearchBookFragment"
+        android:label="fragment_search_book"
+        tools:layout="@layout/fragment_search_book" >
+        <action
+            android:id="@+id/action_searchBookFragment_to_bookIntroductionFragment"
+            app:destination="@id/bookIntroductionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allBookFragment"
+        android:name="com.zacker.bookmaster.ui.allBook.AllBookFragment"
+        android:label="fragment_all_book"
+        tools:layout="@layout/fragment_all_book" >
+        <action
+            android:id="@+id/action_allBookFragment_to_bookIntroductionFragment"
+            app:destination="@id/bookIntroductionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookIntroductionFragment"
+        android:name="com.zacker.bookmaster.ui.bookIntroduction.BookIntroductionFragment"
+        android:label="fragment_book_introduction"
+        tools:layout="@layout/fragment_book_introduction" />
 </navigation>

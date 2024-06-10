@@ -10,6 +10,7 @@ import com.zacker.bookmaster.model.BooksModel
 
 class RandomBookAdapter(
     private val books: List<BooksModel>,
+    private val callback: OnBookItemClickListener
 ) : RecyclerView.Adapter<RandomBookAdapter.ViewHolder>() {
     class ViewHolder(private val binding: ItemBookDiscoverRandomBinding):
         RecyclerView.ViewHolder(binding.root) {
@@ -38,6 +39,7 @@ class RandomBookAdapter(
             holder.bind(it)
         }
         holder.itemView.setOnClickListener {
+            callback.onClickBook(position)
         }
     }
 

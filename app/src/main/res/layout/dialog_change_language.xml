@@ -13,7 +13,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bạn có muốn đổi sang tiếng anh không ?"
+            android:text="Do you want to change to Vietnamese?"
             android:fontFamily="@font/lato_bold"
             android:gravity="center"
             android:textSize="18sp"/>
