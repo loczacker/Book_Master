@@ -1,18 +1,18 @@
-package com.zacker.bookmaster.ui.home.homeBookCase.booksCart
+package com.zacker.bookmaster.ui.home.homeBookCase.favourite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.zacker.bookmaster.databinding.ItemLoveBinding
+import com.zacker.bookmaster.databinding.ItemFavouriteBinding
 import com.zacker.bookmaster.model.BooksModel
 
-class BookCartAdapter(
+class FavouriteAdapter(
     private val books: List<BooksModel>,
     private val callback: OnBookItemClickListener,
     private val callBackCancel: DeleteItemFavourite
-) : RecyclerView.Adapter<BookCartAdapter.ViewHolder>() {
-    class ViewHolder(private val binding: ItemLoveBinding):
+) : RecyclerView.Adapter<FavouriteAdapter.ViewHolder>() {
+    class ViewHolder(private val binding: ItemFavouriteBinding):
         RecyclerView.ViewHolder(binding.root) {
             fun bind(book: BooksModel, deleteCancel: DeleteItemFavourite) {
                 binding.tvNameBook.text = book.bookTitle
@@ -21,15 +21,12 @@ class BookCartAdapter(
                 Glide.with(binding.imgBook.context)
                     .load(book.imageURL)
                     .into(binding.imgBook)
-                binding.ivCancel.setOnClickListener {
-                    deleteCancel.onClickCancel(book)
-                }
             }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemLoveBinding.inflate(
+            ItemFavouriteBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )

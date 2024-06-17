@@ -1,10 +1,10 @@
 package com.zacker.bookmaster.ui.home.homeBookCase
 
+import CartBookFragment
+import FavouriteFragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.zacker.bookmaster.ui.home.homeBookCase.booksCart.CartBookFragment
-import com.zacker.bookmaster.ui.home.homeBookCase.favourite.FavouriteFragment
 
 
 class DataPagerBookCaseAdapter(activity: AppCompatActivity): FragmentStateAdapter(activity) {
@@ -12,8 +12,8 @@ class DataPagerBookCaseAdapter(activity: AppCompatActivity): FragmentStateAdapte
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            0 -> CartBookFragment()
-            1 -> FavouriteFragment()
+            0 -> FavouriteFragment()
+            1 -> CartBookFragment()
             else -> throw  IllegalArgumentException("Unknown Fragment")
         }
     }

@@ -27,10 +27,10 @@ class BookIntroductionFragment : Fragment() {
             val selectedBook = args.getSerializable("selectedBook") as? BooksModel
             if (selectedBook != null) {
                 viewModel.setNameBook("${selectedBook.bookTitle}")
-                binding.tvNameBook.text = selectedBook.bookTitle
-                binding.tvNameWriter.text = selectedBook.authorName
-                binding.tvCategory.text = selectedBook.category
+                binding.tvTitle.text = selectedBook.bookTitle
+                binding.tvAuthor.text = selectedBook.authorName
                 binding.tvIntroduction.text = selectedBook.bookDescription
+                binding.tvPrice.text = "$" + selectedBook.price
                 Glide.with(binding.imgBook.context)
                     .load(selectedBook.imageURL)
                     .into(binding.imgBook)
@@ -57,7 +57,7 @@ class BookIntroductionFragment : Fragment() {
 //            NavHostFragment.findNavController(this)
 //                .navigate(R.id.action_bookIntroductionFragment_to_chapFragment, bundleBook)
 //        }
-        binding.btnLove.setOnClickListener {
+        binding.cbHeart.setOnClickListener {
             val nameBook = viewModel.nameBook.value.toString()
         }
     }

@@ -33,15 +33,12 @@ class ChangeProfileViewModel : ViewModel() {
         BookClient().updateUser(id, updatedUser).enqueue(object : Callback<UsersModel> {
             override fun onResponse(call: Call<UsersModel>, response: Response<UsersModel>) {
                 if (response.isSuccessful) {
-                    // Chỉ cập nhật giá trị khi phản hồi thành công
                     _resultUser.value = updatedUser
                 } else {
-                    // Xử lý phản hồi không thành công nếu cần
                 }
             }
 
             override fun onFailure(call: Call<UsersModel>, t: Throwable) {
-                // Xử lý lỗi nếu cần
             }
         })
     }

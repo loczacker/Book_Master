@@ -1,10 +1,10 @@
 package com.zacker.bookmaster.network
 
 import com.zacker.bookmaster.model.BooksModel
-import com.zacker.bookmaster.model.CartsModel
 import com.zacker.bookmaster.model.UsersModel
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -24,8 +24,10 @@ interface ApiService {
     fun getUserByEmail(@Path("email") email: String): Call<UsersModel>
 
     @GET("/cart/{email}")
-    fun getCartByEmail(@Path("email") email: String): Call<CartsModel>
+    suspend fun getCartByEmailWithCoroutine(@Path("email") email: String): List<BooksModel>
 
+    @GET("/favourite/{email}")
+    suspend fun getFavouriteByEmailWithCoroutine(@Path("email") email: String): List<BooksModel>
 
     @POST("/new-user")
     fun postNewUser(
@@ -38,12 +40,8 @@ interface ApiService {
         @Body user: UsersModel
     ): Call<UsersModel>
 
-//    @GET("/users")
-//    fun getAllUser(): Call<List<UsersModel>>
-//    @PUT("/update-user/{id}")
-//    fun updateUser(
-//        @Path("id") userId: String,
-//        @Body user: UsersModel
-//    ): Call<UsersModel>
-
+    @DELETE("/delete-favourite-item/{id}")
+    suspend fun deleteFavouriteItem(@Path("id") id: String): BooksModel
+    @DELETE("/delete-cart-item/{id}")
+    suspend fun deleteCartItem(@Path("id") id: String): BooksModel
 }

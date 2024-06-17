@@ -60,13 +60,11 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
                     showToastSuccessful()
                     resultData.postValue(true)
                 } else {
-                    // Xử lý lỗi khi POST không thành công
                     showToastUnsuccessful()
                 }
             }
 
             override fun onFailure(call: Call<UsersModel>, t: Throwable) {
-                // Xử lý lỗi xảy ra trong quá trình POST
                 showToastUnsuccessful()
             }
         })
