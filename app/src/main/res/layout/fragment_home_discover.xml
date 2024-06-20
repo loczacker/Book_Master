@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.zacker.bookmaster.ui.home.homeDiscover.HomeDiscoverViewModel" />
+            type="com.zacker.bookmaster.ui.homeDiscover.HomeDiscoverViewModel" />
     </data>
 
     <LinearLayout
@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:background="@color/white"
         android:weightSum="13"
-        tools:context=".ui.home.homeDiscover.HomeDiscoverFragment">
+        tools:context=".ui.homeDiscover.HomeDiscoverFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,6 +34,16 @@
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ib_history"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/baseline_history_24"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_discover"
+                app:layout_constraintEnd_toStartOf="@id/ib_search"
+                app:layout_constraintTop_toTopOf="@+id/tv_discover" />
 
             <ImageButton
                 android:id="@+id/ib_search"

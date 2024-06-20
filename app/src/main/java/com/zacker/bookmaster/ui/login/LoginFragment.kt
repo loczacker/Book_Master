@@ -1,6 +1,5 @@
 package com.zacker.bookmaster.ui.login
 
-import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -10,9 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -26,7 +22,8 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
-    private lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
+    private lateinit var auth: FirebaseAuth
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,19 +33,7 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        setupGoogleSignIn()
         return binding.root
-    }
-
-    private fun setupGoogleSignIn() {
-        activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartIntentSenderForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                viewModel.handleGoogleSignInResult(result.data)
-            }
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,7 +45,7 @@ class LoginFragment : Fragment() {
 
     private fun listener() {
         binding.btnLogin.setOnClickListener {
-            val email: String = binding.edEmail.text.toString()
+            val email : String = binding.edEmail.text.toString()
             val pass: String = binding.edPassword.text.toString()
             if (email.isNotEmpty() && pass.isNotEmpty()) {
                 viewModel.login(email, pass)
@@ -74,9 +59,6 @@ class LoginFragment : Fragment() {
         binding.tvForgotPassword.setOnClickListener {
             forgotPassword()
         }
-        binding.btnLoginGoogle.setOnClickListener {
-            viewModel.signInWithGoogle()
-        }
     }
 
     private fun setUpObserver() {
@@ -88,24 +70,16 @@ class LoginFragment : Fragment() {
             }
         }
         viewModel.startRegister.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let {
-                if (it) {
-                    NavHostFragment.findNavController(this).navigate(R.id.login_to_register, null)
-                }
+            if (it) {
+                NavHostFragment.findNavController(this).navigate(R.id.login_to_register, null)
             }
         }
         viewModel.showToast.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { message ->
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.googleSignInIntent.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { intentSenderRequest ->
-                activityResultLauncher.launch(intentSenderRequest)
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(requireContext(), "Logged in successfully.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     private fun changeColorButton() {
         binding.edEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -136,7 +110,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun forgotPassword() {
-        val dialogBinding: DialogForgotPasswordBinding = DialogForgotPasswordBinding.inflate(layoutInflater)
+        val dialogBinding: DialogForgotPasswordBinding =
+            DialogForgotPasswordBinding.inflate(layoutInflater)
         val dialog = Dialog(requireContext())
         dialog.setContentView(dialogBinding.root)
         val layoutParams = ViewGroup.LayoutParams(
@@ -167,4 +142,4 @@ class LoginFragment : Fragment() {
         }
         dialog.show()
     }
-}
+    }

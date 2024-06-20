@@ -1,4 +1,4 @@
-package com.zacker.bookmaster.ui.home.homeDiscover
+package com.zacker.bookmaster.ui.homeDiscover
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

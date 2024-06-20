@@ -1,4 +1,4 @@
-package com.zacker.bookmaster.ui.home.homeProfile
+package com.zacker.bookmaster.ui.homeProfile
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel

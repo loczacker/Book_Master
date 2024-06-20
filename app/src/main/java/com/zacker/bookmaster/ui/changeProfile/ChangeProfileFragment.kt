@@ -31,7 +31,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.zacker.bookmaster.R
 import com.zacker.bookmaster.databinding.FragmentChangeProfileBinding
 import com.zacker.bookmaster.model.UsersModel
-import com.zacker.bookmaster.ui.home.homeProfile.HomeProfileViewModel
+import com.zacker.bookmaster.ui.homeProfile.HomeProfileViewModel
 import com.zacker.bookmaster.util.Const
 
 class ChangeProfileFragment : Fragment() {

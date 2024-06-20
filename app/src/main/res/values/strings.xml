@@ -13,6 +13,7 @@
     <string name="author">Author:</string>
     <string name="the_maid">The Maid</string>
     <string name="your_web_client_id">1056822241936-kgjc857q1142d1h5c60lh7gpolgg7a5f.apps.googleusercontent.com</string>
+    <string name="stripe_publishable_key">sk_test_51PBwbkGLkrLd9UE1w8kOHxC4Y7CQzurmb2SZc2Qty5VRiJXrLsFC8FAkyUeLrJGlreAxUx1eems5SbEg1o4InPAh00XcpotEhS</string>
     <string name="introduction">Introduction</string>
     <string name="molly_introduction">Molly Gray is not like everyone else. She struggles with social skills and misreads the intentions of others</string>
 </resources>

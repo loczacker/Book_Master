@@ -10,20 +10,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="horizontal">
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="140dp"
-            app:cardCornerRadius="10dp">
-            <ImageView
-                android:id="@+id/img_book"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/book22" />
-        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -32,7 +19,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_name_book"
+                android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -40,8 +27,8 @@
                 android:fontFamily="@font/lato_bold"
                 android:maxLines="2"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:text="@string/the_maid" />
+                android:textSize="20sp"
+                android:text="June 18th 2024, 9:36 am" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -52,27 +39,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
+                    android:textSize="22sp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="@string/author" />
+                    android:text="Total Item: " />
 
                 <TextView
-                    android:id="@+id/tv_name_writer"
+                    android:id="@+id/tv_total_item"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:textColor="#00695C"
                     android:ellipsize="end"
                     android:fontFamily="@font/lato_bold"
                     android:maxLines="1"
-                    android:textSize="15sp"
-                    android:text="@string/nita_prose" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_cancel"
-                    android:layout_marginStart="70dp"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/delete" />
+                    android:textSize="22sp"
+                    android:text="3" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -80,26 +60,26 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:fontFamily="@font/lato_bold"
-                    android:text="Price: " />
+                    android:text="Amount: " />
 
                 <TextView
-                    android:id="@+id/tv_price"
+                    android:id="@+id/tv_amount"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:textColor="#975A5A"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:fontFamily="@font/lato_bold"
-                    android:textSize="20sp"
-                    android:text="$5" />
+                    android:textSize="22sp"
+                    android:text="$19" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>

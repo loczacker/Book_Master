@@ -1,4 +1,4 @@
-package com.zacker.bookmaster.ui.home.homeBookCase
+package com.zacker.bookmaster.ui.homeBookCase
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,11 +18,20 @@ class HomeBookCaseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBookCaseBinding.inflate(inflater, container, false)
-        binding.vpShare.adapter = DataPagerBookCaseAdapter(requireActivity() as AppCompatActivity)
-        val tabTitles = arrayOf("favourite", "cart")
-        TabLayoutMediator(binding.tabBookCase, binding.vpShare) {
-                tab, position -> tab.text = tabTitles[position]
-        }.attach()
+        setupViewPager()
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupViewPager()
+    }
+
+    private fun setupViewPager() {
+        binding.vpShare.adapter = DataPagerBookCaseAdapter(requireActivity() as AppCompatActivity)
+        val tabTitles = arrayOf("Favourite", "Cart")
+        TabLayoutMediator(binding.tabBookCase, binding.vpShare) { tab, position ->
+            tab.text = tabTitles[position]
+        }.attach()
     }
 }

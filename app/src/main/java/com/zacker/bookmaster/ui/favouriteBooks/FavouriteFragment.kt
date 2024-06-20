@@ -6,33 +6,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.DiffUtil
 import com.zacker.bookmaster.R
-import com.zacker.bookmaster.databinding.FragmentCartBookBinding
+import com.zacker.bookmaster.databinding.FragmentFavouriteBinding
 import com.zacker.bookmaster.model.BooksModel
 import com.zacker.bookmaster.network.BookClient
-import com.zacker.bookmaster.ui.home.homeBookCase.booksCart.BookCartAdapter
+import com.zacker.bookmaster.ui.favouriteBooks.BooksDiffCallback
+import com.zacker.bookmaster.ui.favouriteBooks.FavouriteAdapter
+import com.zacker.bookmaster.ui.favouriteBooks.FavouriteViewModel
 import com.zacker.bookmaster.util.Const
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener, BookCartAdapter.DeleteItemFavourite {
+class FavouriteFragment : Fragment(), FavouriteAdapter.OnBookItemClickListener,
+    FavouriteAdapter.DeleteItemFavourite {
 
-    private lateinit var binding: FragmentCartBookBinding
+    private lateinit var binding: FragmentFavouriteBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private val viewModel: CartBookViewModel by viewModels()
-    private lateinit var adapter: BookCartAdapter
-    private val listCartBook =  arrayListOf<BooksModel>()
+    private lateinit var viewModel: FavouriteViewModel
+    private lateinit var adapter: FavouriteAdapter
+    private val listFavouriteBook = arrayListOf<BooksModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCartBookBinding.inflate(inflater, container, false)
+        binding = FragmentFavouriteBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this)[FavouriteViewModel::class.java]
         return binding.root
     }
 
@@ -41,30 +46,25 @@ class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener, Bo
         sharedPreferences = requireActivity().getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
         val userEmail = sharedPreferences.getString(Const.KEY_EMAIL_USER, "") ?: ""
         setupRecyclerView()
-        viewModel.cartBooks.observe(viewLifecycleOwner, Observer { cartBooks ->
-            listCartBook.clear()
-            listCartBook.addAll(cartBooks)
-            adapter.notifyDataSetChanged()
+        viewModel.favouriteBooks.observe(viewLifecycleOwner, Observer { favouriteBooks ->
+            updateFavouriteList(favouriteBooks)
         })
-
-        viewModel.loadCartBooks(userEmail)
+        viewModel.loadFavouriteBooks(userEmail)
     }
 
     override fun onResume() {
         super.onResume()
         sharedPreferences = requireActivity().getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
         val userEmail = sharedPreferences.getString(Const.KEY_EMAIL_USER, "") ?: ""
-        loadCartBooks(userEmail)
+        viewModel.loadFavouriteBooks(userEmail)
     }
 
-    private fun loadCartBooks(userEmail: String) {
+    private fun loadFavouriteBooks(userEmail: String) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val temp = BookClient().getCartByEmailWithCoroutine(userEmail)
+                val temp = BookClient().getFavouriteByEmailWithCoroutine(userEmail)
                 withContext(Dispatchers.Main) {
-                    listCartBook.clear()
-                    listCartBook.addAll(temp)
-                    adapter.notifyDataSetChanged()
+                    updateFavouriteList(temp)
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -75,12 +75,21 @@ class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener, Bo
     }
 
     private fun setupRecyclerView() {
-        adapter = BookCartAdapter(listCartBook, this, this)
-        binding.recyclerViewTabViewed.adapter = adapter
+        adapter = FavouriteAdapter(listFavouriteBook, this, this)
+        binding.recyclerViewTabFavourite.adapter = adapter
+    }
+
+    private fun updateFavouriteList(newList: List<BooksModel>) {
+        val diffCallback = BooksDiffCallback(listFavouriteBook, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
+        listFavouriteBook.clear()
+        listFavouriteBook.addAll(newList)
+        diffResult.dispatchUpdatesTo(adapter)
     }
 
     override fun onClickBook(position: Int, book: BooksModel) {
-        val selectedBook = listCartBook[position]
+        val selectedBook = listFavouriteBook[position]
         val bundle = Bundle()
         bundle.putSerializable("selectedBook", selectedBook)
         NavHostFragment.findNavController(this)
@@ -90,11 +99,11 @@ class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener, Bo
     override fun onClickCancel(book: BooksModel) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                BookClient().deleteCartItem(book._id.toString())
+                BookClient().deleteFavouriteItem(book._id.toString())
                 withContext(Dispatchers.Main) {
-                    val position = listCartBook.indexOf(book)
+                    val position = listFavouriteBook.indexOf(book)
                     if (position != -1) {
-                        listCartBook.removeAt(position)
+                        listFavouriteBook.removeAt(position)
                         adapter.notifyItemRemoved(position)
                     }
                     Toast.makeText(requireContext(), "Book removed from favourites", Toast.LENGTH_SHORT).show()
@@ -106,5 +115,4 @@ class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener, Bo
             }
         }
     }
-
 }

@@ -3,9 +3,9 @@ package com.zacker.bookmaster.ui.home
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.zacker.bookmaster.ui.home.homeBookCase.HomeBookCaseFragment
-import com.zacker.bookmaster.ui.home.homeDiscover.HomeDiscoverFragment
-import com.zacker.bookmaster.ui.home.homeProfile.HomeProfileFragment
+import com.zacker.bookmaster.ui.homeBookCase.HomeBookCaseFragment
+import com.zacker.bookmaster.ui.homeDiscover.HomeDiscoverFragment
+import com.zacker.bookmaster.ui.homeProfile.HomeProfileFragment
 
 
 class ViewPagerHomeAdapter(fragment: HomeFragment):  FragmentStateAdapter(fragment){
@@ -13,8 +13,8 @@ class ViewPagerHomeAdapter(fragment: HomeFragment):  FragmentStateAdapter(fragme
 
     override fun createFragment(position: Int): Fragment {
         return when(position) {
-            1 -> HomeBookCaseFragment()
-            0 -> HomeDiscoverFragment()
+            0 -> HomeBookCaseFragment()
+            1 -> HomeDiscoverFragment()
             2 -> HomeProfileFragment()
             else -> throw  IllegalArgumentException("Unknown Fragment")
         }

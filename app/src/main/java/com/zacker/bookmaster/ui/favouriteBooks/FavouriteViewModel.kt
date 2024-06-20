@@ -1,4 +1,4 @@
-package com.zacker.bookmaster.ui.home.homeBookCase.favourite
+package com.zacker.bookmaster.ui.favouriteBooks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +13,8 @@ class FavouriteViewModel: ViewModel() {
     private val _favouriteBooks = MutableLiveData<List<BooksModel>>()
     val favouriteBooks: LiveData<List<BooksModel>>
         get() = _favouriteBooks
+
+
 
     fun loadFavouriteBooks(userEmail: String) {
         viewModelScope.launch {

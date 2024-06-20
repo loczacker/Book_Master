@@ -1,4 +1,4 @@
-package com.zacker.bookmaster.ui.home.homeDiscover
+package com.zacker.bookmaster.ui.homeDiscover
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.DiffUtil
 import com.zacker.bookmaster.R
 import com.zacker.bookmaster.databinding.FragmentHomeDiscoverBinding
 import com.zacker.bookmaster.model.BooksModel
@@ -22,7 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class HomeDiscoverFragment : Fragment(), RandomBookAdapter.OnBookItemClickListener,
-BookAdapter.OnBookItemClickListener{
+    BookAdapter.OnBookItemClickListener {
     private lateinit var binding: FragmentHomeDiscoverBinding
     private lateinit var viewModel: HomeDiscoverViewModel
     private val books = arrayListOf<BooksModel>()
@@ -51,10 +52,13 @@ BookAdapter.OnBookItemClickListener{
 
         lifecycleScope.launch(Dispatchers.IO) {
             val temp = BookClient().getAllBookWithCoroutine().shuffled()
+            val diffCallback = RandomBooksDiffCallback(randomBooks, temp)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+
             withContext(Dispatchers.Main) {
                 randomBooks.clear()
                 randomBooks.addAll(temp)
-                adapter.notifyDataSetChanged()
+                diffResult.dispatchUpdatesTo(adapter)
             }
         }
     }
@@ -97,6 +101,9 @@ BookAdapter.OnBookItemClickListener{
         }
         binding.ibSearch.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_searchBookFragment, null)
+        }
+        binding.ibHistory.setOnClickListener {
+            NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_historyPaymentFragment, null)
         }
     }
 

@@ -48,7 +48,14 @@
             app:destination="@id/allBookFragment" />
         <action
             android:id="@+id/action_homeFragment_to_bookIntroductionFragment"
-            app:destination="@id/bookIntroductionFragment" />
+            app:destination="@id/bookIntroductionFragment"
+            />
+        <action
+            android:id="@+id/action_homeFragment_to_historyPaymentFragment"
+            app:destination="@id/historyPaymentFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -64,17 +71,17 @@
     </fragment>
     <fragment
         android:id="@+id/homeDiscoveryFragment"
-        android:name="com.zacker.bookmaster.ui.home.homeDiscover.HomeDiscoverFragment"
+        android:name="com.zacker.bookmaster.ui.homeDiscover.HomeDiscoverFragment"
         android:label="fragment_home_discovery"
         tools:layout="@layout/fragment_home_discover" />
     <fragment
         android:id="@+id/homeProfileFragment"
-        android:name="com.zacker.bookmaster.ui.home.homeProfile.HomeProfileFragment"
+        android:name="com.zacker.bookmaster.ui.homeProfile.HomeProfileFragment"
         android:label="fragment_home_profile"
         tools:layout="@layout/fragment_home_profile" />
     <fragment
         android:id="@+id/homeBookCaseFragment"
-        android:name="com.zacker.bookmaster.ui.home.homeBookCase.HomeBookCaseFragment"
+        android:name="com.zacker.bookmaster.ui.homeBookCase.HomeBookCaseFragment"
         android:label="fragment_home_book_case"
         tools:layout="@layout/fragment_home_book_case" />
     <fragment
@@ -96,7 +103,7 @@
         tools:layout="@layout/fragment_favourite" />
     <fragment
         android:id="@+id/cartBookFragment"
-        android:name="com.zacker.bookmaster.ui.home.homeBookCase.booksCart.CartBookFragment"
+        android:name="com.zacker.bookmaster.ui.cartBooks.CartBookFragment"
         android:label="fragment_cart_book"
         tools:layout="@layout/fragment_cart_book" />
     <fragment
@@ -122,4 +129,14 @@
         android:name="com.zacker.bookmaster.ui.bookIntroduction.BookIntroductionFragment"
         android:label="fragment_book_introduction"
         tools:layout="@layout/fragment_book_introduction" />
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.zacker.bookmaster.ui.checkoutBook.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" />
+    <fragment
+        android:id="@+id/historyPaymentFragment"
+        android:name="com.zacker.bookmaster.ui.historyPayment.HistoryPaymentFragment"
+        android:label="fragment_history_payment"
+        tools:layout="@layout/fragment_history_payment" />
 </navigation>

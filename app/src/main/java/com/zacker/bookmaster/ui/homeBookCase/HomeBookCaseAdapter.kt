@@ -1,32 +1,25 @@
-package com.zacker.bookmaster.ui.home.homeDiscover
+package com.zacker.bookmaster.ui.homeBookCase
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.zacker.bookmaster.R
-import com.zacker.bookmaster.databinding.ItemBookDiscoverRandomBinding
+import com.zacker.bookmaster.databinding.ItemBookBinding
 import com.zacker.bookmaster.model.BooksModel
 
-class RandomBookAdapter(
+class HomeBookCaseAdapter(
     private val books: List<BooksModel>,
     private val callback: OnBookItemClickListener
-) : RecyclerView.Adapter<RandomBookAdapter.ViewHolder>() {
-    class ViewHolder(private val binding: ItemBookDiscoverRandomBinding):
+) : RecyclerView.Adapter<HomeBookCaseAdapter.ViewHolder>() {
+    class ViewHolder(private val binding: ItemBookBinding):
         RecyclerView.ViewHolder(binding.root) {
             fun bind(book: BooksModel) {
-                binding.tvNameBook.text = book.bookTitle
-                binding.tvIntroduction.text = book.bookDescription
-                Glide.with(binding.imgBook.context)
-                    .load(book.imageURL)
-                    .placeholder(R.drawable.profile)
-                    .into(binding.imgBook)
+
             }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemBookDiscoverRandomBinding.inflate(
+            ItemBookBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -39,11 +32,11 @@ class RandomBookAdapter(
             holder.bind(it)
         }
         holder.itemView.setOnClickListener {
-            callback.onClickBook(position)
+            callback.onClick(position)
         }
     }
 
     interface OnBookItemClickListener{
-        fun onClickBook(position: Int)
+        fun onClick(position: Int)
     }
 }

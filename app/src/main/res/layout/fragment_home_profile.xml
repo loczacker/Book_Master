@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.zacker.bookmaster.ui.home.homeProfile.HomeProfileViewModel" />
+            type="com.zacker.bookmaster.ui.homeProfile.HomeProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.home.homeProfile.HomeProfileFragment">
+        tools:context=".ui.homeProfile.HomeProfileFragment">
 
         <ImageView
             android:id="@+id/img_profile"

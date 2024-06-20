@@ -128,25 +128,6 @@
             android:textSize="19sp"
             android:fontFamily="@font/lato_regular" />
 
-        <android.widget.Button
-            android:id="@+id/btn_login_google"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/button_white"
-            android:text="Login With"
-            android:textColor="@color/white"
-            android:textColorHint="@color/black"
-            android:textSize="19sp"
-            android:fontFamily="@font/lato_regular"
-            android:drawableRight="@drawable/google_logo"
-            android:gravity="center_vertical|center_horizontal"
-            android:paddingStart="70dp"
-            android:paddingEnd="90dp" />
-
-
-
-
         <TextView
             android:id="@+id/tv_register_login"
             android:layout_width="wrap_content"
@@ -155,7 +136,7 @@
             android:text="No account? Register now."
             android:textSize="17sp"
             android:fontFamily="@font/lato_regular"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="150dp" />
 
     </LinearLayout>
 </layout>

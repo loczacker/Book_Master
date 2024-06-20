@@ -1,4 +1,5 @@
-
+package com.zacker.bookmaster.ui.cartBooks
+import CartBookViewModel
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,36 +8,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.zacker.bookmaster.R
-import com.zacker.bookmaster.databinding.FragmentFavouriteBinding
+import com.zacker.bookmaster.databinding.FragmentCartBookBinding
 import com.zacker.bookmaster.model.BooksModel
 import com.zacker.bookmaster.network.BookClient
-import com.zacker.bookmaster.ui.home.homeBookCase.favourite.FavouriteAdapter
-import com.zacker.bookmaster.ui.home.homeBookCase.favourite.FavouriteViewModel
 import com.zacker.bookmaster.util.Const
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FavouriteFragment : Fragment(), FavouriteAdapter.OnBookItemClickListener,
-    FavouriteAdapter.DeleteItemFavourite {
+class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener,
+    BookCartAdapter.DeleteItemFavourite {
 
-    private lateinit var binding: FragmentFavouriteBinding
+    private lateinit var binding: FragmentCartBookBinding
     private lateinit var sharedPreferences: SharedPreferences
-    private lateinit var viewModel: FavouriteViewModel
-    private lateinit var adapter: FavouriteAdapter
-    private val listFavouriteBook =  arrayListOf<BooksModel>()
+    private val viewModel: CartBookViewModel by viewModels()
+    private lateinit var adapter: BookCartAdapter
+    private val listCartBook =  arrayListOf<BooksModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavouriteBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[FavouriteViewModel::class.java]
+        binding = FragmentCartBookBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,30 +42,51 @@ class FavouriteFragment : Fragment(), FavouriteAdapter.OnBookItemClickListener,
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = requireActivity().getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
         val userEmail = sharedPreferences.getString(Const.KEY_EMAIL_USER, "") ?: ""
+        setUpObserver()
         setupRecyclerView()
-        viewModel.favouriteBooks.observe(viewLifecycleOwner, Observer { cartBooks ->
-            listFavouriteBook.clear()
-            listFavouriteBook.addAll(cartBooks)
+        setListener()
+        viewModel.cartBooks.observe(viewLifecycleOwner, Observer { cartBooks ->
+            listCartBook.clear()
+            listCartBook.addAll(cartBooks)
             adapter.notifyDataSetChanged()
         })
+        viewModel.loadCartBooks(userEmail)
+    }
 
-        viewModel.loadFavouriteBooks(userEmail)
+    private fun setListener() {
+        binding.btnPayment.setOnClickListener {
+            val price = viewModel.totalPrice.value ?: 0.0
+            val cartItems = listCartBook.map { it._id ?: "" }
+
+            if (price > 0 && cartItems.isNotEmpty()) {
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_checkoutFragment, null)
+            } else {
+                Toast.makeText(requireContext(), "Cart is empty or total price is invalid", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    private fun setUpObserver() {
+        viewModel.totalPrice.observe(viewLifecycleOwner, Observer { totalPrice ->
+            binding.tvTotalAmount.text = "$" + totalPrice
+        })
     }
 
     override fun onResume() {
         super.onResume()
         sharedPreferences = requireActivity().getSharedPreferences(Const.KEY_FILE, Context.MODE_PRIVATE)
         val userEmail = sharedPreferences.getString(Const.KEY_EMAIL_USER, "") ?: ""
-        loadFavouriteBooks(userEmail)
+        loadCartBooks(userEmail)
     }
 
-    private fun loadFavouriteBooks(userEmail: String) {
+    private fun loadCartBooks(userEmail: String) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val temp = BookClient().getFavouriteByEmailWithCoroutine(userEmail)
+                val temp = BookClient().getCartByEmailWithCoroutine(userEmail)
                 withContext(Dispatchers.Main) {
-                    listFavouriteBook.clear()
-                    listFavouriteBook.addAll(temp)
+                    listCartBook.clear()
+                    listCartBook.addAll(temp)
                     adapter.notifyDataSetChanged()
                 }
             } catch (e: Exception) {
@@ -79,12 +98,12 @@ class FavouriteFragment : Fragment(), FavouriteAdapter.OnBookItemClickListener,
     }
 
     private fun setupRecyclerView() {
-        adapter = FavouriteAdapter(listFavouriteBook,this, this)
-        binding.recyclerViewTabFavourite.adapter = adapter
+        adapter = BookCartAdapter(listCartBook, this, this)
+        binding.recyclerViewTabViewed.adapter = adapter
     }
 
     override fun onClickBook(position: Int, book: BooksModel) {
-        val selectedBook = listFavouriteBook[position]
+        val selectedBook = listCartBook[position]
         val bundle = Bundle()
         bundle.putSerializable("selectedBook", selectedBook)
         NavHostFragment.findNavController(this)
@@ -94,13 +113,17 @@ class FavouriteFragment : Fragment(), FavouriteAdapter.OnBookItemClickListener,
     override fun onClickCancel(book: BooksModel) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                BookClient().deleteFavouriteItem(book._id.toString())
+                BookClient().deleteCartItem(book._id.toString())
+                val updatedListCartBook = listCartBook.filter { it._id != book._id }
+                val totalPriceAfterDelete = updatedListCartBook.sumByDouble { it.price?.toDoubleOrNull() ?: 0.0 }
+
                 withContext(Dispatchers.Main) {
-                    val position = listFavouriteBook.indexOf(book)
+                    val position = listCartBook.indexOf(book)
                     if (position != -1) {
-                        listFavouriteBook.removeAt(position)
+                        listCartBook.removeAt(position)
                         adapter.notifyItemRemoved(position)
                     }
+                    viewModel.updateTotalPrice(totalPriceAfterDelete)
                     Toast.makeText(requireContext(), "Book removed from favourites", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
@@ -110,4 +133,6 @@ class FavouriteFragment : Fragment(), FavouriteAdapter.OnBookItemClickListener,
             }
         }
     }
+
+
 }

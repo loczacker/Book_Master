@@ -1,6 +1,6 @@
-package com.zacker.bookmaster.ui.home.homeBookCase
+package com.zacker.bookmaster.ui.homeBookCase
 
-import CartBookFragment
+import com.zacker.bookmaster.ui.cartBooks.CartBookFragment
 import FavouriteFragment
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
