@@ -85,7 +85,7 @@ class ChangeProfileFragment : Fragment() {
                     if (!user.photoURL.isNullOrEmpty()) {
                         Glide.with(this)
                             .load(user.photoURL)
-                            .placeholder(R.drawable.avatar)
+                            .placeholder(R.drawable.profile)
                             .into(binding.imgAva)
                     } else {
                         binding.imgAva.setImageResource(R.drawable.profile)
@@ -127,9 +127,7 @@ class ChangeProfileFragment : Fragment() {
                         if (imageUri == null) {
                             oldPhotoUrl?.let { updateProfile(it) }
                         } else {
-                            // Cập nhật ảnh trong ImageView ngay lập tức
                             binding.imgAva.setImageURI(imageUri)
-                            // Sau đó, gọi updateProfile để cập nhật ảnh trên máy chủ
                             uploadImage()
                         }
                     }
@@ -203,7 +201,7 @@ class ChangeProfileFragment : Fragment() {
                 phone = binding.edPhoneChange.text.toString().trim(),
                 address = binding.edAddressChange.text.toString().trim(),
                 about = binding.edAboutChange.text.toString().trim(),
-                photoURL = uploadedImageUrl ?: oldPhotoUrl // Sử dụng URL ảnh cũ nếu không có URL mới
+                photoURL = uploadedImageUrl ?: oldPhotoUrl
             )
             viewModel.updateUser(uid, updatedUser)
 
@@ -225,14 +223,15 @@ class ChangeProfileFragment : Fragment() {
             }
             Toast.makeText(activity, "Update successful", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(activity, "Không thể tải hồ sơ lên", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Not update infomation", Toast.LENGTH_SHORT).show()
         }
+        progressDialog.dismiss()
     }
 
 
 
     private fun uploadImage() {
-        progressDialog.setMessage("download information")
+        progressDialog.setMessage("update information")
         progressDialog.show()
         val filePathAndName = "img/${firebaseAuth.uid}"
         val reference = FirebaseStorage.getInstance().getReference(filePathAndName)

@@ -53,12 +53,10 @@ interface ApiService {
     ): CartsModel
 
     @POST("/create-payment-intent")
-    suspend fun createNewPayment(@Body paymentIntentRequest: PaymentIntentRequest): PaymentIntentResponse
+    fun createPaymentIntent(@Body request: PaymentIntentRequest): Call<PaymentIntentResponse>
 
     @POST("/payment-info")
-    suspend fun postNewPayment(
-        @Body paymentModel: PaymentsModel
-    ): PaymentsModel
+    fun savePaymentInfo(@Body paymentInfo: PaymentsModel): Call<Void>
 
     @PATCH("/update-user/{id}")
     fun updateUser(

@@ -56,7 +56,7 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         apiService.postNewUser(newUser).enqueue(object : Callback<UsersModel> {
             override fun onResponse(call: Call<UsersModel>, response: Response<UsersModel>) {
                 if (response.isSuccessful) {
-                    saveUserEmail(email)
+                    saveUserEmail(email, userName)
                     showToastSuccessful()
                     resultData.postValue(true)
                 } else {
@@ -70,12 +70,13 @@ class RegisterViewModel(application: Application) : AndroidViewModel(application
         })
     }
 
-    private fun saveUserEmail(email: String) {
+    private fun saveUserEmail(email: String,  userName: String) {
         val editor = prefs.edit()
         editor.putBoolean(Const.KEY_LOGIN, true)
         editor.putString(Const.KEY_EMAIL_USER, email)
+        editor.putString(Const.KEY_NAME_USER, userName)
         editor.apply()
-        Log.d("RegisterViewModel", "Saved email: $email")
+        Log.d("RegisterViewModel", "Saved email: $email, $userName")
     }
 
     private fun showToastSuccessful() {

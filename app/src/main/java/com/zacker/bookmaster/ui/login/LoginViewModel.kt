@@ -28,8 +28,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         get() = _showToast
 
     private fun showToast() {
-        _showToast.value = Event(true) // Chạy ngay lập tức
-        _showToast.postValue(Event(true)) // Handler.post chạy sau một chút nhưng không ảnh hưởng đến hiệu năng
+        _showToast.value = Event(true)
+        _showToast.postValue(Event(true))
     }
 
     fun login(email: String, pass: String) {

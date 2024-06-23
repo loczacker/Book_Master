@@ -57,14 +57,17 @@ class CartBookFragment : Fragment(), BookCartAdapter.OnBookItemClickListener,
         binding.btnPayment.setOnClickListener {
             val price = viewModel.totalPrice.value ?: 0.0
             val cartItems = listCartBook.map { it._id ?: "" }
-
             if (price > 0 && cartItems.isNotEmpty()) {
-                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_checkoutFragment, null)
+                val bundle = Bundle().apply {
+                    putDouble("totalPrice", price)
+                }
+                NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_checkoutFragment, bundle)
             } else {
                 Toast.makeText(requireContext(), "Cart is empty or total price is invalid", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
 
     private fun setUpObserver() {

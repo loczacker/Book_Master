@@ -43,24 +43,37 @@ class RegisterFragment : Fragment() {
             val userName: String = binding.edName.text.toString()
             val email: String = binding.edEmail.text.toString()
             val pass: String = binding.edPassword.text.toString()
-            if (email.isNotEmpty() && pass.isNotEmpty() && userName.isNotEmpty()) {
+
+            if (userName.isNotEmpty() && email.isNotEmpty() && pass.isNotEmpty()) {
+                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(requireContext(), "Invalid email format", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                if (pass.length < 8) {
+                    Toast.makeText(requireContext(), "Password must be at least 8 characters", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
                 viewModel.register(email, pass, userName)
             } else {
-                binding.btRes.visibility = View.VISIBLE
+                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
+
         binding.tvLoginRegister.setOnClickListener {
-//            NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment, null)
             Navigation.findNavController(requireView()).navigateUp()
         }
+
         binding.ibRes.setOnClickListener {
-//            NavHostFragment.findNavController(this).navigate(R.id.action_registerFragment_to_loginFragment, null)
             Navigation.findNavController(requireView()).navigateUp()
         }
+
         binding.tvForgot.setOnClickListener {
             forgotPassword()
         }
     }
+
 
     private fun changeColorButton() {
         binding.edName.addTextChangedListener(object : TextWatcher {
